@@ -38,38 +38,37 @@ public:
         outLen = 0;
         wiringPiSPISetup(SPI_CHANNEL, SPI_SPEED) ;
     }
+
     uint16_t getWord() {
         // ordering is different because Pixy is sending 16 bits through SPI
         // instead of 2 bytes in a 16-bit word as with I2C
         uint16_t w;
-        uint8_t c, cout = 0;
+        uint8_t c, out = 0;
 
         if (outLen) {
-            c = PIXY_SYNC_BYTE_DATA;
-            wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
-            cout = outBuf[outIndex++];
+            w = getByte(PIXY_SYNC_BYTE_DATA);
+            out = outBuf[outIndex++];
 
             if (outIndex == outLen) {
                 outLen = 0;
             }
         } else {
-            c = PIXY_SYNC_BYTE;
-            wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
+            w = getByte(PIXY_SYNC_BYTE);
         }
 
-        w = c;
         w <<= 8;
-        c = cout;
-        wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
+        c = getByte(out);
         w |= c;
 
         return w;
     }
-    uint8_t getByte() {
-        uint8_t c = 0x00;
+
+    uint8_t getByte(uint8_t out=0x00) {
+        uint8_t c = out;
         wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
         return c;
     }
+
     int8_t send(uint8_t *data, uint8_t len) {
         if (len > PIXY_OUTBUF_SIZE || outLen != 0) {
             return -1;
