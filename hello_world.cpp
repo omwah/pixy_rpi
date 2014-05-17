@@ -18,22 +18,23 @@
 Pixy pixy;
 
 int main()
-{ 
-  int j;
-  uint16_t blocks;
- 
-  while (1) { 
-    blocks = pixy.getBlocks();
-    
-    if (blocks) {
-      std::cout << "Detected " << blocks << std::endl; 
-      for (j=0; j<blocks; j++) {
-        std::cout << "  block " << j << " ";
-        pixy.blocks[j].print();
-      }
-    }
-  }
+{
+    int j;
+    uint16_t blocks;
 
-  return 0;
+    while (1) {
+        blocks = pixy.getBlocks();
+
+        if (blocks) {
+            std::cout << "Detected " << blocks << std::endl;
+
+            for (j = 0; j < blocks; j++) {
+                std::cout << "  block " << j << " ";
+                pixy.blocks[j].print();
+            }
+        }
+    }
+
+    return 0;
 }
 

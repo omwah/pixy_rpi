@@ -25,8 +25,8 @@
 #include "TPixy.h"
 #include <wiringPiSPI.h>
 
-#define SPI_CHANNEL		    0
-#define SPI_SPEED		    250000 // Arduino: SPI_CLOCK_DIV16
+#define SPI_CHANNEL         0
+#define SPI_SPEED           250000 // Arduino: SPI_CLOCK_DIV16
 
 #define PIXY_SYNC_BYTE              0x5a
 #define PIXY_SYNC_BYTE_DATA         0x5b
@@ -36,7 +36,7 @@ class LinkSPI {
 public:
     void init(uint8_t addr) {
         outLen = 0;
-	wiringPiSPISetup(SPI_CHANNEL, SPI_SPEED) ;
+        wiringPiSPISetup(SPI_CHANNEL, SPI_SPEED) ;
     }
     uint16_t getWord() {
         // ordering is different because Pixy is sending 16 bits through SPI
@@ -45,8 +45,8 @@ public:
         uint8_t c, cout = 0;
 
         if (outLen) {
-	    c = PIXY_SYNC_BYTE_DATA;
-	    wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
+            c = PIXY_SYNC_BYTE_DATA;
+            wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
             cout = outBuf[outIndex++];
 
             if (outIndex == outLen) {
@@ -54,10 +54,10 @@ public:
             }
         } else {
             c = PIXY_SYNC_BYTE;
-	    wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
+            wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
         }
 
-	w = c;
+        w = c;
         w <<= 8;
         c = cout;
         wiringPiSPIDataRW(SPI_CHANNEL, &c, 1);
