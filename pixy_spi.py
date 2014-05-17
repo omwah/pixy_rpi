@@ -15,7 +15,8 @@
 
 #
 #  Pixy.h - Library for interfacing with Pixy.
-#  Created by Scott Robinson, October 22, 2013.
+#  Cobbled together by Omwah and Jasco May 2014
+#  Based on code originally created by Scott Robinson, October 22, 2013.
 #  Released into the public domain.
 #
 
