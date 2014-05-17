@@ -20,9 +20,7 @@
 #
 
 import wiringpi2
-import os
 import struct
-import numpy
 
 SPI_CHANNEL          = 0
 SPI_SPEED            = 250000
@@ -43,13 +41,13 @@ class LinkSPI:
         out = 0
 
         if len(self.outBuf) > 0:
-            w = numpy.uint16(self.getByte(PIXY_SYNC_BYTE_DATA))
+            w = self.getByte(PIXY_SYNC_BYTE_DATA)
             out = self.outBuf.pop(0)
         else:
-            w = numpy.uint16(self.getByte(PIXY_SYNC_BYTE))
+            w = self.getByte(PIXY_SYNC_BYTE)
 
         w = w << 8
-        c = numpy.uint8(self.getByte(out))
+        c = self.getByte(out)
         w = w | c
 
         return w
@@ -61,7 +59,7 @@ class LinkSPI:
         #c = os.read(self.fd, 1)
         # Requires a fixed version of wiringpi2 SPI function
         _, c = wiringpi2.wiringPiSPIDataRW(0, struct.pack('B', out))
-        ret = numpy.uint8(struct.unpack('B', c)[0])
+        ret = struct.unpack('B', c)[0]
         return ret
 
     def send(self, data):
