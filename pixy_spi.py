@@ -20,8 +20,9 @@
 #  Released into the public domain.
 #
 
-import wiringpi2
 import struct
+
+import wiringpi2
 
 SPI_CHANNEL          = 0
 SPI_SPEED            = 250000

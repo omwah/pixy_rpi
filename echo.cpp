@@ -32,6 +32,8 @@ int main()
                 std::cout << "  block " << j << " ";
                 pixy.blocks[j].print();
             }
+        } else {
+            std::cout << "No blocks detected" << std::endl;
         }
     }
 

@@ -9,3 +9,5 @@ while(True):
         for ii, block in enumerate(p.blocks):
             print "  block %d" % ii,
             pixy.print_block(block)
+    else:
+        print "No blocks detected"

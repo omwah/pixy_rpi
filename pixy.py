@@ -13,8 +13,9 @@
 # end license header
 #
 
-import time
 import logging
+
+import wiringpi2
 
 PIXY_MAXIMUM_ARRAYSIZE = 130
 PIXY_START_WORD        = 0xaa55
@@ -72,7 +73,7 @@ class Pixy:
         while (True):
             w = self.link.getWord()
             if w == 0 and lastw == 0:
-                self._delay_microsec(10)
+                wiringpi2.delayMicroseconds(10)
                 return False
             elif w == PIXY_START_WORD and lastw == PIXY_START_WORD:
                 return True
@@ -81,6 +82,3 @@ class Pixy:
                 self.link.getByte() # resync
 
             lastw = w
-
-    def _delay_microsec(self, durationMs):
-        time.sleep(durationMs / 1000000.0)
